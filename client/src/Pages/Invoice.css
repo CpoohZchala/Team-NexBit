@@ -1,0 +1,141 @@
+.invoice-main {
+  /* background-color: #13496b; */
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.invoice-container {
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  min-height: 100vh;
+  padding: 20px;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  border-radius: 20px;
+  position: relative;
+}
+
+.invoice-header {
+  text-align: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.invoice-header h1 {
+  font-size: 2em;
+  margin: 0;
+}
+
+.invoice-header h2 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.invoice-number {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.invoice-content {
+  /* background-color: white; */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #e0e7ed28;
+}
+
+.invoice-table th,
+.invoice-table td {
+  padding: 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+  /* color: black; */
+  /* border-color: #000; */
+  text-align: center;
+}
+
+.invoice-table th {
+  /* background-color: #f2f2f2; Light background for headers */
+  font-weight: bold;
+}
+
+.center-logo-cell {
+  text-align: center;
+  height: 150px;
+  background-color: rgba(0, 0, 0, 0.05); /* Light background for logo area */
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.logo {
+  opacity: 0.5;
+}
+
+.center-logo {
+  max-width: 150px;
+  opacity: 0.5; /* Faded look for logo */
+}
+
+.invoice-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.invoice-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.invoice-watermark img {
+  width: 80%;
+  height: auto;
+}
+
+.total {
+  display: flex;
+  background-color: #fff;
+  color: #000;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.total span {
+  margin-right: 10px;
+}
+
+.total-amount {
+  font-weight: bold;
+}
+
+.payment-button {
+  background-color: #4caf50; /* Green button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.payment-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}

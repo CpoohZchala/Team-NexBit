@@ -1,0 +1,56 @@
+.user-label{
+  color: #ffffff;
+}
+
+.default-bg {
+  background-color: #13496b;
+}
+
+.default-h1 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.default-bg-form {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 35%;
+  height: 80%;
+}
+
+.btn_red_bg {
+  background-color: #d40e0e;
+}
+
+.btn_red_bg:hover {
+  background-color: #7a0707;
+}
+
+.custom-logo-container{
+  width: 40%;
+}
+
+.whole-container{
+  gap:24px
+}
+
+/* Mobile responsiveness for smaller screens (iPhone XR size) */
+@media (max-width: 768px) {
+  
+  .default-bg {
+    padding: 20px;
+    flex-direction: column;
+  }
+  .underline {
+    font-size: 14px;
+  }
+
+  .default-bg-form {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 350px;
+    height: 500px;
+  }
+  .custom-logo-container {
+    width: 250px;
+    height: 250px;
+  }
+  
+}

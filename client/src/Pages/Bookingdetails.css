@@ -1,0 +1,182 @@
+.booking-details.app-booking {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.booking-details .app-booking h1 {
+  text-align: center;
+  color: #144a6f;
+  margin-top: 5px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.booking-details .background-design {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #13496b;
+  clip-path: polygon(-3px 544px, 99.95% 170px, 100.07% 100%, 0% 100%);
+  z-index: -1;
+}
+
+.booking-details .container-booking {
+  background-color: #949494b1;
+  padding: 25px 25px 25px 25px;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 800px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left {
+  margin-left: 30px;
+  margin-top: -10px;
+}
+
+.right {
+  margin-left: 400px;
+  margin-top: -475px;
+}
+.booking-details h1 {
+  text-align: center;
+  color: #b22222;
+}
+
+.booking-details .form-group {
+  margin-bottom: 10px;
+  flex-basis: calc(50% - 10px);
+  margin-right: 10px;
+  color: #13496b;
+}
+
+.booking-details .form-group input {
+  border-radius: 10px;
+  padding: 0px 10px 0px 10px;
+  color: gray;
+}
+
+.booking .form-group:nth-child(odd) {
+  margin-right: 10px;
+}
+
+.booking-details .form-group:nth-child(even) {
+  margin-right: 0;
+}
+
+.booking-details label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-area {
+  width: 300px;
+  height: 40px;
+}
+
+.textarea-last {
+  width: 100%;
+  height: 110px;
+  padding: 8px;
+  margin-top: 3px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.booking-details button.btn {
+  width: 300px;
+  padding: 10px;
+  background-color: rgba(19, 73, 107, 1);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 auto;
+  margin-left: 70px;
+}
+
+.booking-details button.btn:hover {
+  background-color: #4baef4;
+}
+/* General adjustments for mobile */
+@media (max-width: 480px) {
+  .booking-details .container-booking {
+    width: 90%;
+    margin-left: 20px;
+    padding: 15px;
+    background-color: #e9e3e3b1;
+  }
+
+  .booking-details .left,
+  .booking-details .right {
+    margin: 0;
+    width: 100%;
+  }
+
+  .booking-details .background-design {
+    clip-path: polygon(-3px 544px, 99.95% 170px, 100.07% 100%, 0% 100%);
+    position: fixed;
+  }
+
+  .booking-details .app-booking h1 {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .booking-details .form-group label {
+    font-size: 14px;
+    color: #13496b;
+  }
+
+  .booking-details .form-group input,
+  .booking-details .form-group select,
+  .booking-details .textarea-last {
+    width: 85%;
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  .booking-details .input-area {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .booking-details .textarea-last {
+    height: 80px;
+  }
+
+  .flex.justify-between {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .flex.justify-between h2 {
+    font-size: 12px;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .booking-details button.btn,
+  .booking-details button.bg-red-500 {
+    width: 70%;
+    margin: 5px 0;
+    margin-left: -20px;
+  }
+
+  /* Adjust button spacing */
+  .booking-details .flex.justify-center {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+}

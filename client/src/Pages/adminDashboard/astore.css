@@ -1,0 +1,122 @@
+.car-parts {
+    padding: 20px;
+  }
+  
+  .search-section {
+    display: flex;
+    gap: 80px;
+    margin-bottom: 30px;
+    background-color: rgba(19, 70, 107, 1);
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .search-section input {
+    padding: 8px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    width: 280px;
+    height: 20px;
+    font-size: 20px;
+  }
+  
+  .search-section button {
+    padding: 8px 12px;
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #000000;
+    font-size: 26px;
+  }
+  
+  /* Styling for Add New Parts button */
+.Addnewparts {
+  margin-bottom: 20px;  /* Space below the button */
+}
+
+.Addnewparts button {
+  padding: 10px 20px;                /* Padding for button */
+  background-color: #ffffff;         /* Blue background color */
+  color: rgb(4, 4, 4);                       /* White text color */
+  border: 1px solid #3180e7;;                       /* No border */
+  border-radius: 20px;                /* Rounded corners */
+  cursor: pointer;                    /* Pointer cursor on hover */
+  font-size: 16px;                   /* Larger font size */
+  transition: background-color 0.3s; /* Smooth background color transition */
+  width: 180px;                       /* Fixed width */
+  margin-left:1200px;
+}
+
+.Addnewparts button:hover {
+  background-color: #b0b4b7;         /* Darker blue on hover */
+}
+
+  
+  .part-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+  }
+  
+  .part-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 80px;
+    
+  }
+
+  .part-name {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 80px;
+  }
+  
+  .part-details {
+    flex: 1;
+    padding-left: 50px;
+    margin-left: 200px;
+  }
+  
+  .part-details p {
+    margin: 5px 0;
+  }
+  
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .actions button {
+    padding: 10px 20px;
+    margin-bottom: 6px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 150px;
+    margin-right: 400px;
+  }
+  
+  .actions input {
+    padding: 6px;
+    margin-bottom: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .status-changed {
+    color: green;
+    font-weight: bold;
+  }
+  

@@ -1,0 +1,105 @@
+/* Background image with overlay */
+.services-background {
+    background-size: cover;
+    background-position: center;
+    padding: 40px 0;
+    position: relative;
+    
+
+  }
+  
+
+  /* Main container */
+  .services-container {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Header */
+  .header h2 {
+    font-size: 2em;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  
+  .header p {
+    color: #555555;
+    font-size: 1em;
+    margin-bottom: 20px;
+  }
+  
+  /* Image Section */
+  .image-section img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Service List */
+  .services-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+  }
+  
+  /* Individual service category */
+  .service-category {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    width: 300px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  .service-category h3 {
+    font-size: 1.5em;
+    color: #13496b;
+    margin-bottom: 10px;
+  }
+  
+  .service-category p {
+    font-size: 0.9em;
+    color: #555555;
+    margin-bottom: 15px;
+  }
+  
+  .service-category ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .service-category li {
+    font-size: 1em;
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .service-category li::before {
+    margin-right: 8px;
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .services-list {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .service-category {
+      width: 90%;
+      margin: 10px 0;
+    }
+  }
+  

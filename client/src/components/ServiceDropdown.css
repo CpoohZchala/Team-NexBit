@@ -1,0 +1,61 @@
+/* ServicesDropdown.css */
+
+.services-button {
+    color: black;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  
+
+  .services-dropdown {
+    position: absolute;
+    left: 0;
+    margin-top: 25px;
+    margin-left: -500px;
+    width: 800px;
+    background-color:red;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    z-index: 1001;
+  }
+  
+  .category {
+    padding: 1rem 0;
+  }
+  
+  .category-title {
+    font-weight: bold;
+    color: #dc2626; /* red-600 */
+    background-color: #fee2e2; /* red-100 */
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+  }
+  
+  .items-list {
+    margin-top: 0.5rem;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    transition: background-color 0.3s;
+    cursor: pointer;
+  }
+  
+  .item:hover {
+    background-color: #f3f4f6; /* gray-100 */
+    border-radius: 0.25rem;
+  }
+  
+  .item-name {
+    font-size: 0.875rem; /* text-sm */
+  }
+  

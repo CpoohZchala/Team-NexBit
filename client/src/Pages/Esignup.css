@@ -1,0 +1,208 @@
+/* Original Desktop Styles - Unchanged */
+.Esignup-container {
+  background: #13496B;
+  background-size: cover;
+  background-position: center;
+  width: 100%;  
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+ 
+.logo {
+  margin-left: 280px;
+  margin-top: 10px;
+  position: fixed;
+  top: 25%;
+  left: 58%;
+  width: 50%;
+  height: 50%;
+  background-size: contain;  
+}
+
+.Esignup-form {
+  background: rgba(0, 0, 0, 0.781);
+  margin-left: 150px;
+  margin-top: 30px;
+  width: 800px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.Esignup-form h1 {
+  color: red;
+  font-family: Average;
+  font-size: 30px;
+}
+
+.Esignup-form span {
+  color: white;
+}
+
+.main-e {
+  display: flex;
+  gap: 20px;
+  margin-top: 55px;
+}
+
+.Esignup-form label {
+  color: white;
+  text-align: left;
+  font-size: 13px;
+}
+
+.Esignup-form input {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  height: 35px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.Esignup-form button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #ff0000;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 350px;
+  height: 35px;
+  margin-top:-65px;
+  margin-left: 365px;
+}
+
+.Esignup-form button:hover {
+  background-color: #0056b3;
+}
+
+.Esignup-form button b {
+  font-size: 15px;
+}
+
+.Esignup-form p {
+  color: white;
+  margin-left: 50%;
+  margin-top: 1%;
+}
+
+.Esignup-form a {
+  color: #0056b3;
+}
+
+.column-1 {
+  margin-top: -55px;
+  width: 350px;
+}
+
+.column-2 {
+  margin-top: -50px;
+  width: 350px;
+}
+.column-2 select {
+  margin-bottom: 20px; /* Adjust as needed for spacing */
+}
+.column-1 label{
+  margin-top: -5px;
+}
+.column-2 label{
+  margin-top: -5px;
+}
+/* Mobile Responsive Styles */
+@media screen and (max-width: 850px) {
+  .Esignup-container {
+      padding: 15px;
+      justify-content: center;
+      position: relative;
+      height: 155vh;
+  }
+
+  .logo {
+      display: none; /* Hide logo on mobile */
+  }
+
+  .Esignup-form {
+      margin: 20px auto;
+      width: 95%;
+      max-width: 500px;
+      padding: 20px;
+  }
+
+  .main-e {
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+      width: 100%;
+  }
+
+  .column-1,
+  .column-2 {
+      width: 100%;
+      margin-top: 0;
+  }
+
+  .Esignup-form button {
+      width: 100%;
+      margin: 20px auto;
+      position: static;
+  }
+
+  .Esignup-form p {
+      margin: 10px auto;
+      text-align: center;
+  }
+}
+
+/* Additional adjustments for smaller mobile screens */
+@media screen and (max-width: 480px) {
+  .Esignup-form {
+      padding: 15px;
+  }
+
+  .Esignup-form h1 {
+      font-size: 24px;
+  }
+
+  .Esignup-form input {
+      margin-bottom: 15px;
+  }
+}
+
+/* Security question section styles */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+/* Security question section mobile responsiveness */
+@media screen and (max-width: 850px) {
+  
+
+  .px-6 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+  }
+}

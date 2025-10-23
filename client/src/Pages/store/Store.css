@@ -1,0 +1,201 @@
+.car-parts {
+  padding: 20px;
+}
+
+.search-section {
+  display: flex;
+  gap: 80px;
+  margin-bottom: 30px;
+  background-color: rgba(19, 70, 107, 1);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.search-section input {
+  padding: 8px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  width: 280px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.search-section button {
+  padding: 8px 12px;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #000000;
+  font-size: 26px;
+}
+
+.Addnewparts {
+  margin-bottom: 20px;
+}
+
+.Addnewparts button {
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: rgb(4, 4, 4);
+  border: 1px solid #3180e7;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  width: 180px;
+  margin-left: 1200px;
+}
+
+.Addnewparts button:hover {
+  background-color: #b0b4b7;
+}
+
+.part-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.part-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-left: 80px;
+}
+
+.part-name {
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 80px;
+}
+
+.part-details {
+  flex: 1;
+  padding-left: 50px;
+  margin-left: 200px;
+}
+
+.part-details p {
+  margin: 5px 0;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.actions button {
+  padding: 10px 20px;
+  margin-bottom: 6px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 150px;
+  margin-right: 400px;
+}
+
+.actions input {
+  padding: 6px;
+  margin-bottom: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.status-changed {
+  color: green;
+  font-weight: bold;
+}
+
+/* Mobile Styles - Only apply when screen width is less than 768px */
+@media (max-width: 767px) {
+  .car-parts {
+      padding: 10px;
+  }
+
+  .search-section {
+      flex-direction: column;
+      gap: 15px;
+      padding: 10px;
+  }
+
+  .search-section input {
+      width: 100%;
+      font-size: 16px;
+  }
+
+  .search-section button {
+      width: 100%;
+      font-size: 20px;
+      margin-top: 10px;
+  }
+
+  .part-item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 15px;
+  }
+
+  .part-image {
+      margin-left: 0;
+      width: 120px;
+      height: 120px;
+  }
+
+  .part-name {
+      margin-left: 0;
+      margin-top: 10px;
+  }
+
+  .part-details {
+      margin-left: 0;
+      padding-left: 0;
+      text-align: center;
+      margin-top: 15px;
+  }
+
+  .actions {
+      align-items: center;
+      width: 100%;
+      margin-top: 15px;
+  }
+
+  .actions button {
+      margin-right: 0;
+      width: 80%;
+  }
+
+  .Addnewparts button {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+  }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  .part-image {
+      width: 100px;
+      height: 100px;
+  }
+
+  .actions button {
+      width: 90%;
+  }
+
+  .part-details p {
+      font-size: 14px;
+  }
+}

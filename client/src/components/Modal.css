@@ -1,0 +1,51 @@
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10000; /* Sit on top */
+  padding-top: 150px; /* Increased location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.6); /* Darker black w/ opacity for better contrast */
+}
+
+/* Show the modal */
+.modal.show {
+  display: block; /* Show the modal */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #13496b;
+  margin: auto;
+  padding: 30px; /* Increased padding */
+  border: 1px solid #888;
+  width: 60%; /* Increased width for better visibility */
+  max-width: 600px; /* Added max-width for larger screens */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Added shadow for depth */
+  border-radius: 10px; /* Rounded corners */
+}
+
+/* The Close Button */
+.close {
+  color: #ffffff; /* Changed close button color for better visibility */
+  float: right;
+  font-size: 32px; /* Increased font size */
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #ffcc00; /* Changed hover color to a brighter yellow for contrast */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.popup-ul li{
+  padding: 5px 0px 5px 0px;
+
+}

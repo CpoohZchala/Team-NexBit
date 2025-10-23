@@ -1,0 +1,116 @@
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body{
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .Payment-container {
+      position: fixed;
+      background: #13496B;
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-repeat: no-repeat;
+      
+  }
+  
+  .logo {
+      position: absolute;
+      top: 25%;
+      left: 55%;
+      width: 50%;
+      height: 50%;
+      background: url('D:\react\autocare\src\assets\photos\logo.png') no-repeat center center; /* Update with your actual image path */
+      background-size: contain;
+  }
+  
+  .Payment-form {
+      background: rgba(0, 0, 0, 0.78);
+      padding: 20px;
+      width: 50%;
+      height: 80%;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: -600px;
+      margin-left: -35%;
+
+  }
+  .main{
+    margin-top: 50px;
+  }
+  
+  .Payment-form h1 {
+      color: red;
+      margin-bottom: 20px;
+  }
+  
+  .Payment-form span {
+      color: white;
+  }
+  
+  .table-layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr; /* Two columns: one for label, one for input */
+      gap: 15px;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+  }
+  
+  .table-layout label {
+      color: #fdf3f3;
+      font-weight: bolder;
+  }
+  
+  .table-layout input {
+      padding: 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+  }
+  
+  .expiration-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+  }
+  
+  .payment-methods {
+      display: flex;
+      justify-content: space-evenly;
+      margin-bottom: 20px;
+  }
+  
+  .payment-methods img {
+      width: 40px;
+      height: auto;
+  }
+  
+  .Payment-form button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #ff0000;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 70%;
+  }
+  
+  .Payment-form button:hover {
+      background-color: #0056b3;
+  }
+  
+  .Payment-form button b {
+      font-size: 15px;
+  }
+

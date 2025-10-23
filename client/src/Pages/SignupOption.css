@@ -1,0 +1,168 @@
+/* SignupOption.css with responsive*/
+.signupoption-container {
+  background-color: #13496B;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -300px;
+  width: 100%;
+  position: fixed;
+}
+
+.logo-wrapper {
+  max-width: 350px;
+  width: 250px;
+  margin-top: 250px;
+}
+
+.logo-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.signup-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #13496B;
+  min-height: 100vh;
+}
+
+.signup-options {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+
+.signup-option {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.option-title {
+  font-size: clamp(1.5rem, 4vw, 2.375rem);
+  font-weight: bold;
+  color: white;
+  line-height: 1.2;
+  padding: 0.75rem 1rem;
+  border-radius: 30px;
+  background-color: black;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+}
+
+.highlight {
+  color: red;
+}
+
+.image-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.image-button:hover {
+  transform: scale(1.05);
+}
+
+.option-image {
+  max-width: 100%;
+  height: 100px;
+  object-fit: contain;
+}
+
+/* Specific styles for customer signup image */
+.signup-option:last-child .option-image {
+  max-width: 250px;  /* Adjust this value to make the customer image smaller */
+  width: 100%;
+  height: auto;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .signup-container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .logo-wrapper {
+    max-width: 250px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .signup-options {
+    gap: 1.5rem;
+  }
+  
+  .option-title {
+    font-size: 1.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .signup-option:last-child .option-image {
+    max-width: 200px;  /* Smaller customer image on tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-container {
+    padding: 0.5rem;
+  }
+  .logo-wrapper {
+    max-width: 300px;
+    margin-top: 250px;  /* Added margin at the top to move logo down */
+    margin-bottom: 1rem;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .logo-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  .option-title {
+    font-size: clamp(1.5rem, 4vw, 2.375rem);
+    font-weight: bold;
+    color: white;
+    line-height: 0.9;
+    padding: 0.75rem 0.75rem;
+    border-radius: 30px;
+    background-color: black;
+    width: 250px;
+    text-align: center;
+    margin: 0;
+  }
+  .image-button img{
+    background: none;
+    border: none;
+    height: 150px;
+    width: 100%;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .signup-container {
+    min-height: 100vh;
+    background-color: #13496B;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+}

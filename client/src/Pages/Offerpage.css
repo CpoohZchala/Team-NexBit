@@ -1,0 +1,156 @@
+.offers-container {
+    min-height: 100vh;
+    background-color: #f9fafb;
+    padding: 3rem 1rem;
+    margin-top: -8px;
+  }
+  
+  .offers-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .offers-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1rem;
+  }
+  
+  .offers-header p {
+    font-size: 1.25rem;
+    color: #4b5563;
+  }
+  
+  .offers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    margin-top: -50px;
+  }
+  
+  @media (min-width: 768px) {
+    .offers-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .offer-card {
+    background-color: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease;
+  }
+  
+  .offer-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .offer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  
+  .offer-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .offer-title h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  .discount-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  
+  .offer-description {
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  
+  .offer-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #374151;
+  }
+  
+  .feature-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  
+  .offer-validity {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+  }
+  
+  .promo-banner {
+    margin-top: 3rem;
+    text-align: center;
+  }
+  
+  .promo-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: #eff6ff;
+    padding: 1.5rem 2rem;
+    border-radius: 0.75rem;
+    color: #2563eb;
+  }
+  
+  .promo-content p {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .offer-card {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  
+  .offer-card:nth-child(1) { animation-delay: 0.1s; }
+  .offer-card:nth-child(2) { animation-delay: 0.2s; }
+  .offer-card:nth-child(3) { animation-delay: 0.3s; }
+  .offer-card:nth-child(4) { animation-delay: 0.4s; }

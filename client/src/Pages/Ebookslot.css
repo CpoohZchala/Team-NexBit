@@ -1,0 +1,70 @@
+.booking-container{
+  margin-left: 35%;
+  margin-top: 10%;
+}
+  
+  .booking-box {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .booking-box h1 {
+    font-size: 46px;
+    margin-top: -3%;
+    font-family: 'Cursive', sans-serif; /* For your header font style */
+  }
+  
+  .mechanic-info p {
+    margin: 5px 0;
+    font-weight: bold;
+  }
+  
+  .time-input {
+    margin: 40px 0;
+    
+  }
+  
+  .time-input label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .time-input input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100px;
+    border-color: #13496B;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25px;
+    
+  }
+  .action-buttons p{
+    margin-top: 7%;
+    font-size: larger;
+  }
+  
+  .confirm-btn {
+    background-color:green;
+    border-radius:25px;
+    cursor: pointer;
+    height: 40px ;
+    width: 120px;
+  }
+  
+  .cancel-btn{
+    background-color:red;
+    border-radius:25px;
+    cursor: pointer;
+    height: 40px ;
+    width: 120px;
+
+  }

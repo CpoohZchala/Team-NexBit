@@ -8,7 +8,7 @@
 
 ## Overview
 
-The **Auto Care Web Application** aims to revolutionize the operations of vehicle service centers by automating and streamlining appointment scheduling, maintenance records, inventory tracking, and customer support. By leveraging cutting-edge technology, this solution will improve efficiency, reduce human error, and enhance customer satisfaction at vehicle service centers.
+The **Auto Care Web App** aims to revolutionize the operations of vehicle service centers by automating and streamlining appointment scheduling, maintenance records, inventory tracking, and customer support. By leveraging cutting-edge technology, this solution will improve efficiency, reduce human error, and enhance customer satisfaction at vehicle service centers.
 
 This web application offers a comprehensive platform for managing service appointments, vehicle maintenance records, and real-time communication between customers and service center personnel.
 

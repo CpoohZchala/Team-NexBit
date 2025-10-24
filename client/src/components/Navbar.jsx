@@ -14,7 +14,9 @@ const Navbar = () => {
     <nav className="bg-white shadow-md fixed top-0 w-full z-10">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
         <div className="navbar-logo">
-          <img src={logo} alt="Logo" className="h-10" />
+           <Link to="/">
+            <img src={logo} alt="Logo" className="h-10 cursor-pointer" />
+          </Link>
         </div>
 
         <div

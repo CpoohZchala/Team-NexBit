@@ -196,7 +196,7 @@ const HomePage = () => {
               <div className="nav-links">
                 <Link to="/">HOME</Link>
                 {token && <Link to="/bookings">BOOKINGS</Link>}
-                {token && <Link to="/contact">CONTACT</Link>}
+                {token && <Link to="/contactus">CONTACT</Link>}
                 <Link to="/servicepage">SERVICES</Link>
                 <Link to="/offerpage">OFFERS</Link>
                 {token && <Link to="/store">STORE</Link>}
@@ -343,7 +343,9 @@ const HomePage = () => {
                 <h2 style={{ color: "#13496b" }} className="text-[24px]">
                   Contact Us
                 </h2>
-                <FaArrowRightFromBracket />
+                 <Link to="/contactus">
+                  <FaArrowRightFromBracket />
+                </Link>
               </div>
             </div>
           </section>

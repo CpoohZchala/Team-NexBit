@@ -311,7 +311,7 @@ const HomePage = () => {
           </section>
   
           {/* What We Do Section */}
-          <section className="flex flex-col sm:flex-row justify-center items-center px-4 sm:px-10 lg:px-20">
+          <section className="flex flex-col sm:flex-row justify-center items-center px-4 sm:px-10 lg:px-20 mb-20">
             <div className="mechanic-image mb-4 sm:mb-0">
               <img
                 className="ImageB"
@@ -358,7 +358,9 @@ const HomePage = () => {
           </div>
 
           {/* History Section */}
+          
           <section className="history-section-container">
+           <div>
             <h2
               style={{ color: "#13496b" }}
               className="text-[48px] uppercase font-semibold text-3xl mt-20"
@@ -376,6 +378,7 @@ const HomePage = () => {
               excellence, providing fast, reliable, and professional service for
               every vehicle that comes through our doors.
             </p>
+            </div> 
           </section>
 
           {/* Our Services Section */}

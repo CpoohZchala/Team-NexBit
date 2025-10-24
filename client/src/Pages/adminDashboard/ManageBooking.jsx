@@ -45,7 +45,7 @@ const ManageBooking = () => {
   const fetchMechanics = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api//bookingSlot/getAllMechanics",
+        "http://localhost:3000/api/bookingSlot/getAllMechanics",
         {
           headers: {
             "Content-Type": "application/json",
@@ -139,65 +139,68 @@ const ManageBooking = () => {
               </tr>
             </thead>
             <tbody>
-              {allBookings.map((booking, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 border-b">
-                    {booking.userId.fullname}
-                  </td>
-                  <td className="px-6 py-4 border-b">
-                    {booking.mechanicId.firstname}
-                  </td>
-                  <td className="px-6 py-4 border-b">
-                    {booking.preferreddate} - {booking.preferredtime}{" "}
-                  </td>
-                  <td className="px-6 py-4 border-b">
-                    {booking.isAccepted === "pending" && (
-                      <button className="px-4 py-2 text-sm text-white bg-orange-500 rounded-lg">
-                        Pending
-                      </button>
-                    )}
-
-                    {booking.isAccepted === "accepted" && (
-                      <button className="px-4 py-2 text-sm text-white bg-blue-500 rounded-lg">
-                        Ongoing
-                      </button>
-                    )}
-
-                    {booking.isAccepted === "rejected" && (
-                      <button className="px-4 py-2 text-sm text-white bg-red-500 rounded-lg">
-                        Rejected
-                      </button>
-                    )}
-
-                    {booking.isAccepted === "completed" && (
-                      <button className="px-4 py-2 text-sm text-white bg-green-500 rounded-lg">
-                        Completed
-                      </button>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 border-b">
-                    {booking.isPaid && (
-                      <button className="px-4 py-2 text-sm text-white bg-green-500 rounded-lg">
-                        <TiTick />
-                      </button>
-                    )}
-                    {!booking.isPaid && (
-                      <button className="px-4 py-2 text-sm text-white bg-red-500 rounded-lg">
-                        <MdOutlineCancel />
-                      </button>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 border-b">
-                    <button
-                      className="px-4 py-2 text-sm text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg"
-                      onClick={() => handleEdit(booking)}
-                    >
-                      <FaRegEdit />
-                    </button>
-                  </td>
+              {allBookings.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="text-center py-4">No bookings found.</td>
                 </tr>
-              ))}
+              ) : (
+                allBookings.map((booking, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 border-b">
+                      {booking.userId?.fullname || "N/A"}
+                    </td>
+                    <td className="px-6 py-4 border-b">
+                      {booking.mechanicId?.firstname || "Unassigned"}
+                    </td>
+                    <td className="px-6 py-4 border-b">
+                      {booking.preferreddate} - {booking.preferredtime}
+                    </td>
+                    <td className="px-6 py-4 border-b">
+                      {booking.isAccepted === "pending" && (
+                        <button className="px-4 py-2 text-sm text-white bg-orange-500 rounded-lg">
+                          Pending
+                        </button>
+                      )}
+                      {booking.isAccepted === "accepted" && (
+                        <button className="px-4 py-2 text-sm text-white bg-blue-500 rounded-lg">
+                          Ongoing
+                        </button>
+                      )}
+                      {booking.isAccepted === "rejected" && (
+                        <button className="px-4 py-2 text-sm text-white bg-red-500 rounded-lg">
+                          Rejected
+                        </button>
+                      )}
+                      {booking.isAccepted === "completed" && (
+                        <button className="px-4 py-2 text-sm text-white bg-green-500 rounded-lg">
+                          Completed
+                        </button>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 border-b">
+                      {booking.isPaid ? (
+                        <button className="px-4 py-2 text-sm text-white bg-green-500 rounded-lg">
+                          <TiTick />
+                        </button>
+                      ) : (
+                        <button className="px-4 py-2 text-sm text-white bg-red-500 rounded-lg">
+                          <MdOutlineCancel />
+                        </button>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 border-b">
+                      <button
+                        className="px-4 py-2 text-sm text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg"
+                        onClick={() => handleEdit(booking)}
+                      >
+                        <FaRegEdit />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
+
           </table>
         </div>
       </div>

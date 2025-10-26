@@ -1,9 +1,8 @@
 import "./Modal.css"; // Import your CSS file
-// import { useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 
 const UserModal = ({ showModal, toggleModal, bookingDetails }) => {
-  // const navigate = useNavigate();
+  
 
   const closeModal = () => {
     toggleModal();

@@ -19,10 +19,9 @@ import Addwork from "./Pages/mechanicDashboard/Addwork.jsx";
 import ADashboard from "./Pages/adminDashboard/ADashboard.jsx";
 import ManageBooking from "./Pages/adminDashboard/ManageBooking.jsx";
 import ASideBar from "./Pages/adminDashboard/ASideBar.jsx";
-import "./Pages/adminDashboard/ADashboard.css"; // Add your own styling
+import "./Pages/adminDashboard/ADashboard.css"; 
 import SingleMechanic from "./Pages/adminDashboard/mechanicPages/SingleMechanic.jsx";
 import MechanicProfile from "./Pages/adminDashboard/mechanicPages/MechanicProfile.jsx";
-// import Dashboard from "./Pages/mechanicDashboard/MDashboard";
 import DashboardContent from "./Pages/adminDashboard/adminComponent/DashboardContent.jsx";
 import PaymentCancel from "./components/PaymentCancel.jsx";
 import PaymentSuccess from "./components/PaymentSuccess.jsx";
@@ -77,7 +76,6 @@ function AdminLayout() {
       <div className="flex-1 ml-[250px] p-4">
         <Routes>
           <Route path="dashboard" element={<ADashboard />} />
-          {/* <Route path="manageCustomer" element={<ManageCustomer />} /> */}
           <Route path="manageBooking" element={<ManageBooking />} />
           <Route path="mechanics">
             <Route index element={<MechanicProfile />} />

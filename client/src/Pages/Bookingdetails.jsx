@@ -370,7 +370,7 @@ function Bookingdetails() {
                 <textarea
                   className="textarea-last text-black"
                   name="message"
-                  placeholder=" Enter your message here"
+                  placeholder="write a small message about the problem "
                   value={form.message}
                   onChange={handleChange}
                 ></textarea>

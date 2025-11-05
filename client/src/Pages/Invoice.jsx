@@ -79,7 +79,7 @@ const Invoice = () => {
         // Optional: Reset form or redirect
       }
     } catch (error) {
-      console.error("Bill creation error:", error);
+      console.error("Bill created successfully!", error);
       Swal.fire({
         position: "top-end",
         icon: "error",

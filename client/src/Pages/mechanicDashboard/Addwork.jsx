@@ -7,40 +7,89 @@ import axios from "axios";
 
 const Addwork = () => {
   const navigate = useNavigate();
+
+  // Form states
   const [warranty, setWarranty] = useState("");
   const [qty, setQty] = useState(0);
   const [unitAmount, setUnitAmount] = useState(0);
   const [partCode, setPartCode] = useState("");
   const [description, setDescription] = useState("");
+  const [parts, setParts] = useState([]); // ✅ all parts list
+
+  // Work items (persisted in localStorage)
   const [workItems, setWorkItems] = useState(() => {
-    // Load workItems from localStorage if available
     const savedItems = localStorage.getItem("workItems");
     return savedItems ? JSON.parse(savedItems) : [];
   });
 
+  // Save work items to localStorage whenever they change
   useEffect(() => {
-    // Save workItems to localStorage whenever they change
     localStorage.setItem("workItems", JSON.stringify(workItems));
   }, [workItems]);
 
+  // ✅ Fetch all parts when page loads
+  useEffect(() => {
+    const fetchParts = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/inventory");
+        setParts(response.data);
+      } catch (error) {
+        console.error("Error fetching parts list:", error);
+      }
+    };
+    fetchParts();
+  }, []);
+
+  // ✅ Handle part code selection
+  const handlePartCodeChange = async (e) => {
+    const selectedCode = e.target.value;
+    setPartCode(selectedCode);
+
+    // If no code selected, reset fields
+    if (!selectedCode) {
+      setUnitAmount(0);
+      setDescription("");
+      setWarranty("");
+      return;
+    }
+
+    // Option 1: If you want to fetch full part details from backend
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/inventory/partcode/${selectedCode}`
+      );
+      const part = response.data;
+      setUnitAmount(part.price || 0);
+      setDescription(part.description || "");
+      setWarranty(part.partName || "");
+    } catch (error) {
+      console.error("Error fetching inventory item by part code:", error);
+    } 
+  };
+
+  // ✅ Add to work items
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const tempTotal = qty * unitAmount;
-    // Create an entry object
+    if (!partCode || qty <= 0 || unitAmount <= 0) {
+      alert("Please select a valid part and enter quantity/amount.");
+      return;
+    }
+
+    const tempTotal = Number(qty) * Number(unitAmount);
+
     const newWorkItem = {
       partCode: partCode,
       description: description,
       warranty: warranty,
-      qty: qty,
-      unitAmount: unitAmount,
+      qty: Number(qty),
+      unitAmount: Number(unitAmount),
       total: tempTotal,
     };
 
-    // Add the new entry to the array
     setWorkItems([...workItems, newWorkItem]);
 
-    // Reset form fields
+    // Reset fields
     setPartCode("");
     setDescription("");
     setWarranty("");
@@ -48,30 +97,12 @@ const Addwork = () => {
     setUnitAmount(0);
   };
 
-  const handlePartCodeChange = async (e) => {
-    const partCode = e.target.value;
-    setPartCode(partCode);
-
-    if (partCode) {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/inventory/partcode/${partCode}`
-        );
-        const part = response.data;
-        setUnitAmount(part.price);
-        setDescription(part.description);
-        setWarranty(part.partName);
-      } catch (error) {
-        console.error("Error fetching inventory item by part code:", error);
-      }
-    }
-  };
-
+  // ✅ Navigation to Invoice
   const handleNavigateToInvoice = () => {
-    // Navigate to the Invoice page and pass workItems array as state
     navigate("/invoice");
   };
 
+  // ✅ Navigation to Home
   const navigateToHome = () => {
     localStorage.removeItem("bookingId");
     localStorage.removeItem("workItems");
@@ -81,25 +112,36 @@ const Addwork = () => {
   return (
     <div className="design">
       <div className="container-add">
+        {/* ================= FORM SECTION ================= */}
         <div className="form-section">
           <h1>ADD WORK HERE</h1>
+
           <button
             onClick={navigateToHome}
             className="mb-4 w-[45px] h-[35px] bg-gray-200 rounded-lg text-black flex justify-center items-center"
           >
             <FaHome />
           </button>
+
           <form onSubmit={handleSubmit}>
+            {/* ✅ Dropdown list for part codes */}
             <div className="form-group">
               <label>Parts Code No :</label>
-              <input
+              <select
                 className="form_input"
-                type="text"
-                name="Code"
                 value={partCode}
                 onChange={handlePartCodeChange}
-              />
+              >
+                <option value="">-- Select a Part Code --</option>
+                {parts.map((p) => (
+                  <option key={p.partCode} value={p.partCode}>
+                    {p.partCode} - {p.partName}
+                  </option>
+                ))}
+              </select>
             </div>
+
+            {/* Part Name */}
             <div className="form-group">
               <label>Parts Name :</label>
               <input
@@ -110,6 +152,8 @@ const Addwork = () => {
                 onChange={(e) => setWarranty(e.target.value)}
               />
             </div>
+
+            {/* Quantity */}
             <div className="form-group">
               <label>Qty :</label>
               <input
@@ -117,9 +161,11 @@ const Addwork = () => {
                 type="number"
                 name="qty"
                 value={qty}
-                onChange={(e) => setQty(e.target.value)}
+                onChange={(e) => setQty(Number(e.target.value))}
               />
             </div>
+
+            {/* Unit Amount */}
             <div className="form-group">
               <label>Amount (Unit) :</label>
               <input
@@ -127,9 +173,11 @@ const Addwork = () => {
                 type="number"
                 name="amount"
                 value={unitAmount}
-                onChange={(e) => setUnitAmount(e.target.value)}
+                onChange={(e) => setUnitAmount(Number(e.target.value))}
               />
             </div>
+
+            {/* Description */}
             <div className="form-group">
               <label>Description of Work :</label>
               <textarea
@@ -139,15 +187,19 @@ const Addwork = () => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
+
+            {/* Buttons */}
             <div className="flex gap-2 justify-between">
               <button
                 type="submit"
-                className="bg-red-500 py-2 mb-3 mr- rounded w-[200px] hover:bg-red-700"
+                className="bg-red-500 py-2 mb-3 rounded w-[200px] hover:bg-red-700"
               >
                 ADD TO BILL
               </button>
+
               <button
                 onClick={handleNavigateToInvoice}
+                type="button"
                 className="bg-green-500 py-2 mb-3 rounded w-[200px] hover:bg-green-700 uppercase"
               >
                 View Invoice
@@ -155,8 +207,10 @@ const Addwork = () => {
             </div>
           </form>
         </div>
+
+        {/* ================= IMAGE SECTION ================= */}
         <div className="image-section">
-          <img className="image2" src={Image2} />
+          <img className="image2" src={Image2} alt="Add work" />
         </div>
       </div>
     </div>

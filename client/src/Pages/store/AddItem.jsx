@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
@@ -9,12 +10,57 @@ function AddItem() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
-  const [message, setMessage] = useState("");
+  const imageInputRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
 
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // required to allow drop
+    e.dataTransfer.dropEffect = 'copy';
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      if (file.type && !file.type.startsWith('image/')) {
+        Swal.fire({ icon: 'warning', title: 'Invalid file', text: 'Please drop an image file.' });
+        return;
+      }
+      setImage(file);
+      // try to set the file input's files for consistency
+      try {
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        if (imageInputRef.current) imageInputRef.current.files = dt.files;
+      } catch (err) {
+        // ignore if DataTransfer isn't available
+      }
+    }
+  };
+
+  // Generate part code with "AC" prefix
   const generatePartCode = () => {
     const randomNum = Math.floor(100 + Math.random() * 900); // Generate a random 3-digit number
     return `AC${randomNum}`;
@@ -24,13 +70,22 @@ function AddItem() {
     e.preventDefault();
 
     // Validation checks
-    if (quantity < 1) {
-      setMessage("Quantity cannot be less than 1.");
+    if (!image) {
+      await Swal.fire({ icon: 'warning', title: 'Add image', text: 'Please upload an image of the item.' });
+      return;
+    }
+    if (quantity === "") {
+      await Swal.fire({ icon: 'warning', title: 'Add quantity', text: 'Please enter the quantity.' });
       return;
     }
 
-    if (price < 1) {
-      setMessage("Price cannot be less than 1.");
+    // if (parseInt(quantity, 10) < 0) {
+    //   setMessage("Quantity cannot be less than 0.");
+    //   return;
+    // }
+
+    if (price === "" || parseFloat(price) < 1) {
+      await Swal.fire({ icon: 'warning', title: 'Invalid price', text: 'Please enter a valid price' });
       return;
     }
 
@@ -57,7 +112,13 @@ function AddItem() {
         }
       );
       console.log(response); // Log the response after receiving it
-      setMessage("Item added successfully!");
+      // Show success modal with generated part code
+      await Swal.fire({
+        icon: "success",
+        title: "Item added successfully!",
+        html: `Part code: <strong>${partCode}</strong>`,
+        confirmButtonText: "OK",
+      });
       clearForm(); // Clears form after successful submission
     } catch (error) {
       console.error("Error adding item:", error);
@@ -70,13 +131,21 @@ function AddItem() {
       } else {
         console.error("Error message:", error.message);
       }
-      setMessage("Failed to add item.");
+      // Show error modal
+      const errText = error.response?.data?.message || error.message || "Failed to add item.";
+      await Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: errText,
+        confirmButtonText: "OK",
+      });
     }
   };
 
   //cancel image selection
   const cancelSelection = () => {
     setImage(null);
+    if (imageInputRef.current) imageInputRef.current.value = null;
   };
 
   //clear form
@@ -86,6 +155,7 @@ function AddItem() {
     setPrice("");
     setDescription("");
     setImage(null);
+    if (imageInputRef.current) imageInputRef.current.value = null;
   };
 
 
@@ -99,7 +169,6 @@ function AddItem() {
         <RiArrowGoBackLine className="w-5 h-5" />
       </Link>
       </div>
-      {message && <p className="mb-4 text-green-500">{message}</p>}
       <form onSubmit={handleSubmit} encType="multipart/form-data" className="flex flex-wrap flex-row">
         <div className="w-full md:w-1/2 pr-4">
           <div className="mb-4">
@@ -129,7 +198,22 @@ function AddItem() {
               type="number"
               id="quantity"
               value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
+              min="1"
+              step="1"
+              onChange={(e) => {
+                const raw = e.target.value;
+                if (raw === "") {
+                  setQuantity("");
+                  return;
+                }
+                const parsed = parseInt(raw, 10);
+                if (Number.isNaN(parsed)) {
+                  setQuantity("");
+                  return;
+                }
+                // Clamp to zero as minimum
+                setQuantity(String(Math.max(0, parsed)));
+              }}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               required
             />
@@ -144,9 +228,23 @@ function AddItem() {
             <input
               type="number"
               step="0.01"
+              min="1"
               id="price"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) => {
+                const raw = e.target.value;
+                if (raw === "") {
+                  setPrice("");
+                  return;
+                }
+                const parsed = parseFloat(raw);
+                if (Number.isNaN(parsed)) {
+                  setPrice("");
+                  return;
+                }
+                // Enforce minimum 1
+                setPrice(String(Math.max(1, parsed)));
+              }}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               required
             />
@@ -163,6 +261,7 @@ function AddItem() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
             />
           </div>
           <div className="flex items-center justify-between">
@@ -189,7 +288,7 @@ function AddItem() {
               Upload Image
             </label>
             <div className="flex items-center justify-between gap-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-              <input type="file" id="image" onChange={handleImageChange} />
+              <input ref={imageInputRef} type="file" id="image" onChange={handleImageChange} />
               <span onClick={cancelSelection} className="cursor-pointer">
                 X
               </span>
@@ -204,8 +303,18 @@ function AddItem() {
               />
             </div>
           ) : (
-            <div className="mb-4 border-dotted border-2 border-gray-300 rounded h-[300px] flex items-center justify-center">
-              <span className="text-gray-500">Drag here</span>
+            <div
+              onDragEnter={handleDragEnter}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`mb-4 rounded h-[300px] flex items-center justify-center transition-all duration-150 ${
+                isDragging
+                  ? 'border-2 border-blue-400 bg-blue-50'
+                  : 'border-dotted border-2 border-gray-300'
+              }`}
+            >
+              <span className="text-gray-500">Drag image here</span>
             </div>
           )}
         </div>

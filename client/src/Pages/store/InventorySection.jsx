@@ -22,7 +22,7 @@ function InventorySection() {
           itemPrice: part.price,
           itemQuantity: part.quantity,
           description: part.description,
-          itemImage: `http://localhost:3000${part.partImage}`, // Ensure the URL is correct
+          itemImage: part.partImageUrl ? part.partImageUrl : (part.partImage ? `http://localhost:3000${part.partImage}` : ''),
         }));
 
         // Use a Map to ensure unique items based on itemCode
@@ -136,10 +136,23 @@ function InventorySection() {
             <MdDashboard className="h-[35px] w-[35px]" />
           </Link>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 flex justify-center">
           <Link
             to={"/admin/additem"}
-            className="bg-blue-500 hover:bg-blue-700 text-white uppercase p-2  rounded-md "
+            aria-label="Add Inventory Item"
+            className="uppercase"
+            style={{
+              backgroundColor: '#204a64',
+              color: '#ffffff',
+              display: 'inline-block',
+              padding: '8px 12px',
+              borderRadius: 6,
+              textAlign: 'center',
+              textDecoration: 'none',
+              // width: '400px',
+              width: 'calc(100vw - 340px)',
+              maxWidth: 400,
+            }}
           >
             Add Item
           </Link>

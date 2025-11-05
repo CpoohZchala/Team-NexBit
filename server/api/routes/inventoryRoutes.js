@@ -10,4 +10,7 @@ router.delete('/inventory/:id', inventoryController.deleteInventoryItem); // Del
 router.get('/inventory/partcode/:partCode', inventoryController.getInventoryByPartCode); // Route to fetch by part code
 router.put('/inventory/:id', inventoryController.updateInventoryItem); // Update route
 
+
+
+
 module.exports = router;

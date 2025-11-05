@@ -1,3 +1,4 @@
+//Booking Details
 import Swal from "sweetalert2";
 import "../../components/Modal.css"; // Import your CSS file
 import axios from "axios";

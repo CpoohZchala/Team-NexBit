@@ -38,7 +38,7 @@ const BookingDashboard = () => {
         });
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching bookings:", error);
     }
   };
 
@@ -85,6 +85,7 @@ const BookingDashboard = () => {
       <div>
         <Navbar />
       </div>
+
       <div className="m-6 mt-14 text-[48px] font-extrabold flex items-center justify-between uppercase text-[#204a64]">
         <div>Bookings</div>
       </div>
@@ -191,11 +192,11 @@ const BookingDashboard = () => {
               </div>
               <div className="grid grid-cols-2 text-sm">
                 <span className="text-gray-600">Date:</span>
-                <span className="text-right">{booking.preferreddate}</span>
+                <span className="text-right">{booking.preferreddate || "N/A"}</span>
               </div>
               <div className="grid grid-cols-2 text-sm">
                 <span className="text-gray-600">Time:</span>
-                <span className="text-right">{booking.preferredtime}</span>
+                <span className="text-right">{booking.preferredtime || "N/A"}</span>
               </div>
 
               <div className="grid grid-cols-2 text-sm items-center">

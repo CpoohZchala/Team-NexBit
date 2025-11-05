@@ -30,21 +30,25 @@ const ChatModal = ({ isOpen, onClose }) => {
   
 
   const handleInput = async (e) => {
-    e.preventDefault();
-    const newMessage = { type: 'user', text: prompt };
-    setMessages((prev) => [...prev, newMessage]);
-    setPrompt("");
+  e.preventDefault();
+  if (!prompt.trim()) return;
 
-    try {
-      const res = await axios.post('http://localhost:3000/api/chat', { prompt });
-      const botMessage = { type: 'bot', text: res.data.response };
-      setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error("Error fetching AI response:", error);
-      const errorMessage = { type: 'bot', text: "Error fetching AI response" };
-      setMessages((prev) => [...prev, errorMessage]);
-    }
-  };
+  const userText = prompt;
+  setMessages(prev => [...prev, { type: 'user', text: userText }]);
+  setPrompt("");
+
+  try {
+    const res = await axios.post('http://localhost:3000/api/chat', { prompt: userText });
+    setMessages(prev => [...prev, { type: 'bot', text: res.data.response }]);
+  } catch (error) {
+    console.error("Error fetching AI response:", error);
+    const serverMsg =
+      error.response?.data?.error ||
+      error.message ||
+      "Unknown error";
+    setMessages(prev => [...prev, { type: 'bot', text: `Error: ${serverMsg}` }]);
+  }
+};
 
   return (
     <div style={styles.overlay}>

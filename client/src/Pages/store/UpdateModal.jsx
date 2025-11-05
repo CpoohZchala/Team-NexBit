@@ -7,7 +7,10 @@ const UpdateModal = ({ part, onClose, onSave }) => {
 
   
   const handleSave = () => {
-    onSave({ ...part, itemQuantity: quantity, itemPrice: price });
+    // Ensure numeric values when saving
+    const qty = Number(quantity);
+    const pr = Number(price);
+    onSave({ ...part, itemQuantity: isNaN(qty) ? 0 : Math.max(0, qty), itemPrice: isNaN(pr) ? pr : pr });
   };
 
   if (!part) return null;
@@ -20,8 +23,22 @@ const UpdateModal = ({ part, onClose, onSave }) => {
           <label className="block mb-2">Quantity</label>
           <input
             type="number"
+            min={0}
+            step={1}
             value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
+            onChange={(e) => {
+              const raw = e.target.value;
+              if (raw === "") {
+                setQuantity(0);
+                return;
+              }
+              const parsed = parseInt(raw, 10);
+              if (Number.isNaN(parsed)) {
+                setQuantity(0);
+                return;
+              }
+              setQuantity(Math.max(0, parsed));
+            }}
             className="w-full p-2 border rounded"
           />
         </div>

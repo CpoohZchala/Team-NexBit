@@ -242,7 +242,7 @@ const Dashboard = () => {
                               )}
                             </div>
                             <p className="text-gray-700 text-base">
-                              From: {note.recieverId.fullname}
+                              From: {note.recieverId ? note.recieverId.fullname : "Unknown Sender"}
                             </p>
                           </div>
                         </div>

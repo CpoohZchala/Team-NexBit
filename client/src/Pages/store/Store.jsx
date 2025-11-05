@@ -40,34 +40,29 @@ const Store = () => {
   }, []); 
 
 
-  const handleAdd = (part) => {
-    // Find the index of the part in the array
-    const updatedItem = items.map((p) => {
-      if (p.id === part.id) {
-        // Reduce the quantity by 1, ensuring it doesn't go below 0
-        return { ...p, quantity: Math.max(p.quantity - 1, 0) };
-      }
-      return p;
-    });
-  
-    // Update the item array state
-    setItems(updatedItem);
-  
-    // Optionally set the added item
-    setAddedItem(part.code);
+ const handleAdd = (part) => {
+  // Update quantity after adding
+  const updatedItems = items.map((p) => {
+    if (p._id === part._id) {
+      return { ...p, itemQuantity: Math.max(p.itemQuantity - 1, 0) };
+    }
+    return p;
+  });
 
-  console.log(setAddedItem);
+  setItems(updatedItems);
 
-  
-    // Show success alert
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Item added successfully",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
+  // Store selected item in context
+  setAddedItem(part.itemCode);
+
+  Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: "Item added successfully",
+    showConfirmButton: false,
+    timer: 1500,
+  });
+};
+
 
   // const handleDelete = (code) => {
   //   const updateditem = item.map((part) => {

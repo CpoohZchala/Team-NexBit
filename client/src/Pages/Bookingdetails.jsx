@@ -4,9 +4,11 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Navbar from "../components/Navbar";
+
 
 function Bookingdetails() {
-  const { user, addedItem } = useAuth(); // Get addedItem from AuthContext
+  const { user, addedItem , setAddedItem} = useAuth(); 
   const [allMechanics, setAllMechanics] = useState([]);
   const [userName, setUserName] = useState(user?.fullname || "");
   const [userEmail, setUserEmail] = useState(user?.email || "");
@@ -15,6 +17,9 @@ function Bookingdetails() {
   const [yearError, setYearError] = useState("");
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
+
+
 
   useEffect(() => {
     const fetchMechanics = async () => {
@@ -71,124 +76,142 @@ function Bookingdetails() {
     setSelectedMechanic(mechanicId);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+e.preventDefault();
 
-    // Simple form validation
-    if (
-      !form.vehicleMake ||
-      !form.vehicleModel ||
-      !form.vehicleNumber ||
-      !form.manufacturedYear ||
-      !userName ||
-      !mobileNumber ||
-      !userEmail
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Missing Fields",
-        text: "Please fill in all required fields.",
-      });
-      return;
-    }
+let newErrors = {};
+// validation (keep your existing checks)
+if (
+  !form.vehicleMake ||
+  !form.vehicleModel ||
+  !form.vehicleNumber ||
+  !form.manufacturedYear ||
+  !userName ||
+  !mobileNumber ||
+  !userEmail
+) {
+  Swal.fire({
+    icon: "error",
+    title: "Missing Fields",
+    text: "Please fill in all required fields.",
+  });
+  if (!form.message.trim()) {
+    newErrors.message = "Message is required";
+  }
 
-    const bookingData = {
-      vehiclemake: form.vehicleMake,
-      vehicletype: form.vehicleModel,
-      vehiclenumber: form.vehicleNumber,
-      manufecturedyear: form.manufacturedYear,
-      preferreddate: form.preferredDate,
-      preferredtime: form.preferredTime,
-      vehicleownername: userName,
-      mobilenumber: mobileNumber,
-      model: addedItem ?? "No item selected",
-      email: userEmail,
-      message: form.message,
-      userId: user._id,
-      mechanicId: selectedMechanic,
-    };
-
-    try {
-      let bookingId;
-      const response = await fetch("http://localhost:3000/api/booking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Booking creation failed:", errorData);
-        throw new Error("Failed to create booking");
-      }
-      const responseData = await response.json();
-
-      // Access the new booking's _id
-      if (response.status === 200) {
-        bookingId = responseData.data._id;
-        // console.log("New booking ID:", bookingId);
-      }
-      // console.log("Booking created successfully", user._id);
-
-      const sendNotification = await fetch(
-        `http://localhost:3000/api/notification/createNotification/${user._id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            bookingId: bookingId,
-            mechanicId: selectedMechanic,
-            topic: "Booking",
-            message: "Booking created successfully",
-          }),
-        }
-      );
-      // console.log("Notification response:", sendNotification);
-
-      if (!sendNotification.ok) {
-        const notificationError = await sendNotification.json();
-        console.error("Notification sending failed:", notificationError);
-        throw new Error("Failed to send notification");
-      }
-
-      Swal.fire({
-        title: "Success!",
-        text: "Your operation was successful.",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-
-      navigate("/");
-      setForm({
-        vehicleMake: "",
-        vehicleModel: "",
-        vehicleNumber: "",
-        manufacturedYear: "",
-        preferredDate: "",
-        preferredTime: "",
-        message: "",
-        mechanicId: "",
-      });
-      setUserName("");
-      setMobileNumber("");
-      setUserEmail("");
-    } catch (error) {
-      console.error(
-        "Error during booking creation or notification sending:",
-        error
-      );
-      Swal.fire({
-        icon: "error",
-        title: "Booking Failed!",
-        text: "Failed to create booking or send notification. Please try again.",
-        confirmButtonText: "OK",
-      });
-    }
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    Swal.fire({
+      icon: "error",
+      title: "Missing Fields",
+      text: newErrors.general || "Please fill in all required fields.",
+    });
+    return;
+  }
+  setErrors({});
+}
+  const bookingData = {
+    vehiclemake: form.vehicleMake,
+    vehicletype: form.vehicleModel,
+    vehiclenumber: form.vehicleNumber,
+    manufecturedyear: form.manufacturedYear,
+    preferreddate: form.preferredDate,
+    preferredtime: form.preferredTime,
+    vehicleownername: userName,
+    mobilenumber: mobileNumber,
+    model: addedItem ?? "No item selected",
+    email: userEmail,
+    message: form.message,
+    userId: user._id,
+    mechanicId: selectedMechanic,
   };
+
+  try {
+    const response = await fetch("http://localhost:3000/api/booking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bookingData),
+    });
+
+    // parse body (always try to parse JSON)
+    let responseData = null;
+    try {
+      responseData = await response.json();
+    } catch (parseErr) {
+      // response had no JSON body
+      responseData = null;
+    }
+
+    // If backend returned non-2xx, show backend message if present
+    if (!response.ok) {
+      const backendMessage =
+        responseData?.message || responseData?.error || `Request failed (${response.status})`;
+      Swal.fire({
+        icon: "error",
+        title: "Booking Failed",
+        text: backendMessage,
+      });
+      return; // stop here
+    }
+
+    // success: proceed with notification and success flow
+    const bookingId = responseData?.data?._id;
+
+    // send notification (existing code) - also handle errors gracefully
+    const sendNotification = await fetch(
+      `http://localhost:3000/api/notification/createNotification/${user._id}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bookingId,
+          mechanicId: selectedMechanic,
+          topic: "Booking",
+          message: "Booking created successfully",
+        }),
+      }
+    );
+
+    if (!sendNotification.ok) {
+      const notifBody = await sendNotification.json().catch(() => null);
+      throw new Error(notifBody?.message || "Failed to send notification");
+    }
+
+    Swal.fire({
+      title: "Success!",
+      text: "Your booking has been created successfully.",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+
+    // reset form + context
+    setForm({
+      vehicleMake: "",
+      vehicleModel: "",
+      vehicleNumber: "",
+      manufacturedYear: "",
+      preferredDate: "",
+      preferredTime: "",
+      message: "",
+    });
+    setUserName("");
+    setMobileNumber("");
+    setUserEmail("");
+    setSelectedMechanic("");
+    setAddedItem(""); // clear selected item in context
+
+    navigate("/");
+
+  } catch (error) {
+    console.error("Error during booking creation:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Booking Failed!",
+      text: error.message || "Failed to create booking. Please try again.",
+    });
+  }
+};
+
 
   const generateTimeOptions = () => {
     const times = [];
@@ -205,28 +228,11 @@ function Bookingdetails() {
 
   const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
 
-  const handleCancel = (e) => {
-    e.preventDefault(); // Prevent default behavior if needed
-
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to cancel your booking?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, cancel it!",
-      cancelButtonText: "No, keep it",
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/"); // Redirect to home or another relevant page after cancellation
-        Swal.fire("Cancelled!", "Your booking has been cancelled.", "success");
-      }
-    });
-  };
-
   return (
-    <main className="booking-details flex justify-center text-white relative">
+
+   <>
+    <Navbar />
+    <main className="booking-details flex justify-center text-white relative mt-20">
       <div className="background-design"></div>
       <div className="app-booking pb-4">
         <h1>SLOT BOOKING DETAILS</h1>
@@ -341,14 +347,14 @@ function Bookingdetails() {
               </div>
 
               <div className="form-group">
-                <label>Selected Item</label>{" "}
+                <label>Selected Item Code:</label>
                 {/* Changed label to Selected Item */}
                 <input
                   className="input-area"
                   type="text"
                   name="selectedItem"
                   placeholder="Selected Item"
-                  value={addedItem} // Use addedItem from context
+                  value={addedItem || ""}  // Use addedItem from context
                   readOnly
                 />
               </div>
@@ -370,17 +376,21 @@ function Bookingdetails() {
                 <textarea
                   className="textarea-last text-black"
                   name="message"
-                  placeholder=" Enter your message here"
+                  placeholder="Enter your message here"
                   value={form.message}
                   onChange={handleChange}
                 ></textarea>
+                {errors.message && (
+                  <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                )}
               </div>
+
             </div>
             <div className="flex flex-col md:flex-row justify-between w-full px-8 mb-4 items-center">
               {/* <h2 className="text-center text-lg font-bold mb-4 md:mb-0">
                 Please select a mechanic
               </h2> */}
-              <div className="flex flex-wrap justify-center mt-2 w-full md:w-auto">
+              <div className="flex flex-wrap justify-center mt-2 w-full md:w-auto">               
                 <select
                   className="dropdown rounded-lg text-gray-700 p-2 w-[300px] "
                   value={selectedMechanic}
@@ -395,14 +405,32 @@ function Bookingdetails() {
                 </select>
               </div>
             </div>
-            <div className="flex justify-center  ">
+            <div className="flex justify-center gap-4">
               <button
-                onClick={handleCancel}
-                className="bg-red-500 hover:bg-red-300 text-white p-3 w-full ml-8 text-uppercase rounded-[10px] md:w-[300px]"
-              >
-                Cancel Booking
+                type="button"
+                onClick={() => {
+                  setForm({
+                    vehicleMake: "",
+                    vehicleModel: "",
+                    vehicleNumber: "",
+                    manufacturedYear: "",
+                    preferredDate: "",
+                    preferredTime: "",                  
+                    message: "",
+                  });
+                  setUserName(user?.fullname || "");
+                  setUserEmail(user?.email || "");
+                  setMobileNumber(user?.phone || "");
+                  setSelectedMechanic("");
+                  setYearError("");
+                  setAddedItem("");
+                }}
+                className="bg-gray-700 hover:bg-gray-400 text-white p-3 w-full text-uppercase rounded-[10px] md:w-[300px]">
+                Clear Form
               </button>
-              <button type="submit" className="btn">
+              <button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700 text-white p-3 w-full text-uppercase rounded-[10px] md:w-[300px]">
                 Book Now
               </button>
             </div>
@@ -410,6 +438,7 @@ function Bookingdetails() {
         </div>
       </div>
     </main>
+    </>
   );
 }
 

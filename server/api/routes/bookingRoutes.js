@@ -16,6 +16,8 @@ router.post('/completeBooking/:bookingId', bookingController.completeBooking);
 router.get('/bookingCount/getAllBookings', bookingController.getAllBookings);
 router.get('/getAllBookings/:userId', bookingController.getAllBookingsByUserId);
 router.get('/changePaymentStatus/:bookingId', bookingController.changePaymentStatus);
+router.put('/cancelBooking/:bookingId', bookingController.cancelBooking);
+
 
 
 router.post('/addBill/:bookingId', bookingController.addBill);

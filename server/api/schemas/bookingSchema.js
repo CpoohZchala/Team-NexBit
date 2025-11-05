@@ -70,7 +70,7 @@ const bookingSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    required: false,
+    required: true,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,

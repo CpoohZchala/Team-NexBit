@@ -22,15 +22,16 @@ exports.createBooking = async (req, res) => {
   } = req.body; // Assuming userId and booking details are passed in the request body
   try {
     const existingBooking = await Booking.findOne({
+      mechanicId,
       preferreddate,
       preferredtime,
     });
 
     if (existingBooking) {
-      return res
-        .status(400)
-        .send({ error: "Booking already exists for this date and time" });
-    }
+      return res.status(409).json({
+    status: "FAILED",
+    message: "Selected mechanic is not available at that date and time"
+  });}
 
     // Create a new instance of the Booking model with user-related data
     const newBooking = new Booking({
@@ -346,5 +347,31 @@ exports.changePaymentStatus = async (req, res) => {
       status: "FAILED",
       message: "An error occurred while fetching booking",
     });
+  }
+};
+
+// Cancel booking controller
+exports.cancelBooking = async (req, res) => {
+  try {
+    const bookingId = req.params.bookingId;
+
+    // Update the booking status to "cancelled"
+    const updatedBooking = await Booking.findByIdAndUpdate(
+      bookingId,
+      { isAccepted: "cancelled" },
+      { new: true }
+    );
+
+    if (!updatedBooking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    res.status(200).json({
+      message: "Booking cancelled successfully",
+      booking: updatedBooking,
+    });
+  } catch (error) {
+    console.error("Error cancelling booking:", error);
+    res.status(500).json({ message: "Server error", error });
   }
 };

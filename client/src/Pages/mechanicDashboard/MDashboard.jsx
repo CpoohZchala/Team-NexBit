@@ -251,9 +251,7 @@ const Dashboard = () => {
                   </div>
                 )}
               </li>
-              <li>
-                <button onClick={ToggleEvent}>Settings</button>
-              </li>
+          
               <li>
                 <button onClick={navigateToProfile}>Profile</button>
               </li>
@@ -266,8 +264,8 @@ const Dashboard = () => {
         <main className="dashboard">
           <div className="flex w-[100%] justify-between items-center">
             {user && (
-              <h1 className="my-4 font-semibold text-[24px] uppercase">
-                Dashboard -{" "}
+              <h1 className="my-4 font-semibold text-[24px] ">
+                Mechanic Dashboard -{" "}
                 {user.userRole === "user"
                   ? user.fullname
                   : `${user.firstname} ${user.lastname}`}

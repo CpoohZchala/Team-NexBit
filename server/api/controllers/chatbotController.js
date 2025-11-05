@@ -1,21 +1,42 @@
-// FILE: controllers/chatbotController.js
+// controllers/chatbotController.js
+require("dotenv").config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const genAI = new GoogleGenerativeAI("AIzaSyDgpLs7-h1afwL2MGc8wqbjrEMlCjP1Btc");
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 exports.getAIResponse = async (req, res) => {
   const { prompt } = req.body;
 
-  try {
-    const result = await model.generateContent(prompt);
-    if (result && result.response && result.response.text) {
-      res.json({ response: result.response.text() });
-    } else {
-      res.status(500).json({ error: "Invalid response structure" });
+  // helper for retry
+  async function safeGenerate(prompt, retries = 3) {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const result = await model.generateContent(prompt);
+        return result.response.text();
+      } catch (err) {
+        if (err.message.includes("503") && i < retries - 1) {
+          console.warn(`Gemini overloaded, retrying... (${i + 1})`);
+          await new Promise(r => setTimeout(r, 1500 * (i + 1))); // backoff
+          continue;
+        }
+        throw err;
+      }
     }
+  }
+
+  try {
+    const reply = await safeGenerate(prompt);
+    res.json({ response: reply });
   } catch (error) {
-    console.error("Error generating content:", error);
+    console.error("Gemini error details:", error.message);
+
+    if (error.message.includes("503")) {
+      return res.status(503).json({
+        error: "Gemini servers are busy. Please try again in a few seconds.",
+      });
+    }
+
     res.status(500).json({ error: "Error generating content" });
   }
 };

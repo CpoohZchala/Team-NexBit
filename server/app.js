@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+
 const inventoryRoutes = require("./api/routes/inventoryRoutes");
 const adminRoutes = require("./api/routes/adminRoutes");
 const loginRoutes = require("./api/routes/loginRoutes");

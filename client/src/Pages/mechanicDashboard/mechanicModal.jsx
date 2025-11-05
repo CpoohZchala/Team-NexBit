@@ -88,6 +88,9 @@ const MechanicModal = ({ showModal, toggleModal, bookingDetails }) => {
               <li>Mobile Number: {bookingDetails.mobilenumber}</li>
               <li>Email: {bookingDetails.email}</li>
               <li>Message: {bookingDetails.message}</li>
+              {bookingDetails.model && (
+              <li>Selected Item: {bookingDetails.model}</li>
+              )}
             </ul>
           </div>
         </div>

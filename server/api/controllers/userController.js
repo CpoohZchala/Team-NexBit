@@ -6,7 +6,7 @@ const Feedback = require("../schemas/feedbackSchema");
 
 // Create a new user
 exports.createUser = async (req, res) => {
-  const { username, password, email, phone, fullname, address, securityQuestion, answer } = req.body;
+  const { username, password, email, phone, fullname, securityQuestion, answer } = req.body;
 
   try { 
     // Hash password before saving
@@ -19,13 +19,13 @@ exports.createUser = async (req, res) => {
       email,
       phone,
       fullname,
-      address,
       securityQuestion,
       answer
     });
     
     // Save the user to the database
     await newUser.save();
+    console.log("Saved user:", newUser);
     
     res.status(201).send({ message: 'Customer profile created successfully' });
   } catch (error) {

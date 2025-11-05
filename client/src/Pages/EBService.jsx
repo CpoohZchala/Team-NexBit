@@ -1,4 +1,4 @@
-import './EBService.css'; // Add necessary CSS styles here
+import './EBService.css'; 
 import  ImageT from '../assets/photos/T.png'
 import { useNavigate } from 'react-router-dom';
 import Navbar from "../components/Navbar"
@@ -14,13 +14,13 @@ function EBService() {
   };
 
 
-    const handleEmergencyService = () => {
-      navigate('/emergencyservice')
-  };
+  //   const handleEmergencyService = () => {
+  //     navigate('/emergencyservice')
+  // };
 
   return (
     <div className="EBService">
-      <div className='mt-10'><Navbar /></div>
+      <div className='mt-10'><Navbar/></div>
       
       <main>
         {/* Slot Booking Section */} 

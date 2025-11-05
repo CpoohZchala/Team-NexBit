@@ -49,3 +49,39 @@
   padding: 5px 0px 5px 0px;
 
 }
+/* Table styling inside modal */
+.modal-content table {
+  width: 100%;
+  border-collapse: separate; /* Allows spacing between cells */
+  border-spacing: 0 8px; /* Adds vertical space between rows */
+  margin-top: 15px;
+  background-color: #1b577d; /* Slightly lighter blue for contrast */
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.modal-content th,
+.modal-content td {
+  padding: 12px 14px; /* Adds spacing inside cells */
+  text-align: left;
+  border-bottom: 1px solid #0e3148;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.modal-content th {
+  background-color: #0f3a57;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-content tbody tr:nth-child(even) {
+  background-color: #165179;
+}
+
+.modal-content tbody tr:hover {
+  background-color: #1e5f8d;
+  transition: background-color 0.2s ease;
+}
+

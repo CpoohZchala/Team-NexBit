@@ -176,6 +176,11 @@ const ManageBooking = () => {
                           Completed
                         </button>
                       )}
+                        {booking.isAccepted === "cancelled" && (
+                        <button className="px-4 py-2 text-sm text-white bg-red-500 rounded-lg">
+                      Cancelled
+                        </button>
+                      )}
                     </td>
                     <td className="px-6 py-4 border-b">
                       {booking.isPaid ? (

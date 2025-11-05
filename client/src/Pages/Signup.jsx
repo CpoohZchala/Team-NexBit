@@ -28,6 +28,46 @@ export default function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault(); // Prevent default form submission
+
+    //email validation regex
+    const emailPattern =/^[^|s@]+@[^s@]+\.[^s@]+$/;
+
+    // Phone validation (only digits, 10 digits)
+    const phonePattern = /^[0-9]{10}$/;
+
+     // Check for empty fields
+    if (!fullname || !email || !phone || !username || !password || !conformPassword || !securityQuestion || !answer) {
+      Swal.fire({
+        icon: "warning",
+        title: "Missing Fields",
+        text: "Please fill in all required fields.",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+       // Validate email
+  if (!emailPattern.test(email)) {
+    Swal.fire({
+      icon: "error",
+      title: "Invalid Email",
+      text: "Please enter a valid email address.",
+      confirmButtonText: "OK",
+    });
+    return;
+  }
+
+  // Validate phone
+  if (!phonePattern.test(phone)) {
+    Swal.fire({
+      icon: "error",
+      title: "Invalid Phone Number",
+      text: "Please enter a valid 10-digit phone number.",
+      confirmButtonText: "OK",
+    });
+    return;
+  }
+  
+ // Proceed if all validations pass
     const response = await fetch("http://localhost:3000/api/usignup", {
       method: "POST",
       headers: {
@@ -63,7 +103,7 @@ export default function Signup() {
       });
     }
   };
-
+  // Check password match
   const comparePassword = () => {
     if (conformPassword !== password) {
       return true;
@@ -71,7 +111,7 @@ export default function Signup() {
       return false;
     }
   };
-
+ 
   return (
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSignup}>

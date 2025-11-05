@@ -60,6 +60,7 @@ function AddItem() {
     }
   };
 
+  // Generate part code with "AC" prefix
   const generatePartCode = () => {
     const randomNum = Math.floor(100 + Math.random() * 900); // Generate a random 3-digit number
     return `AC${randomNum}`;
@@ -260,6 +261,7 @@ function AddItem() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
             />
           </div>
           <div className="flex items-center justify-between">

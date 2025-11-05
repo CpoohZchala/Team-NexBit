@@ -72,6 +72,11 @@ function InventorySection() {
         timer: 2000,
         showConfirmButton: false,
       });
+      try {
+        window.location.reload();
+      } catch (err) {
+        console.warn('Reload failed', err);
+      }
     } catch (error) {
       console.error("Error updating item:", error);
       Swal.fire({

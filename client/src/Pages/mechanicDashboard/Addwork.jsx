@@ -53,7 +53,6 @@ const Addwork = () => {
       return;
     }
 
-    // Option 1: If you want to fetch full part details from backend
     try {
       const response = await axios.get(
         `http://localhost:3000/api/inventory/partcode/${selectedCode}`
@@ -64,7 +63,7 @@ const Addwork = () => {
       setWarranty(part.partName || "");
     } catch (error) {
       console.error("Error fetching inventory item by part code:", error);
-    } 
+    }
   };
 
   // ✅ Add to work items
@@ -134,8 +133,13 @@ const Addwork = () => {
               >
                 <option value="">-- Select a Part Code --</option>
                 {parts.map((p) => (
-                  <option key={p.partCode} value={p.partCode}>
-                    {p.partCode} - {p.partName}
+                  <option
+                    key={p.partCode}
+                    value={p.partCode}
+                    disabled={p.quantity === 0} // ✅ Disable if quantity = 0
+                  >
+                    {p.partCode} - {p.partName}{" "}
+                    {p.quantity === 0 ? "(Out of Stock)" : ""}
                   </option>
                 ))}
               </select>
@@ -160,8 +164,12 @@ const Addwork = () => {
                 className="form_input"
                 type="number"
                 name="qty"
+                min="1" // ✅ Prevent selecting minus or zero
                 value={qty}
-                onChange={(e) => setQty(Number(e.target.value))}
+                onChange={(e) => {
+                  const val = Number(e.target.value);
+                  if (val >= 0) setQty(val); // ✅ Prevent negative values
+                }}
               />
             </div>
 
@@ -172,8 +180,12 @@ const Addwork = () => {
                 className="form_input"
                 type="number"
                 name="amount"
+                min="0" // ✅ Prevent negative prices
                 value={unitAmount}
-                onChange={(e) => setUnitAmount(Number(e.target.value))}
+                onChange={(e) => {
+                  const val = Number(e.target.value);
+                  if (val >= 0) setUnitAmount(val);
+                }}
               />
             </div>
 

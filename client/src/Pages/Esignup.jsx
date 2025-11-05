@@ -27,43 +27,131 @@ export default function Esignup() {
     { value: "high_school", label: "What was the name of your high school?" },
   ];
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch("http://localhost:3000/api/esignup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-        email,
-        phone,
-        firstname,
-        lastname,
-        idnumber,
-        address,
-        conformPassword,
-        securityQuestion,
-        answer,
-      }),
-    });
-
-    const data = await response.json();
-    if (response.ok) {
+  const validateForm = () => {
+    // Check empty fields
+    if (
+      !firstname ||
+      !lastname ||
+      !email ||
+      !phone ||
+      !username ||
+      !password ||
+      !idnumber ||
+      !address ||
+      !conformPassword ||
+      !securityQuestion ||
+      !answer
+    ) {
       Swal.fire({
-        icon: "success",
-        title: "Success!",
-        text: "Mechanic profile created successfully!",
-        confirmButtonText: "OK",
+        icon: "warning",
+        title: "Missing Fields",
+        text: "Please fill in all the required fields.",
       });
-      navigate("/");
-    } else {
+      return false;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text: `Error: ${data.error}`, // Display the dynamic error message
-        confirmButtonText: "OK",
+        title: "Invalid Email",
+        text: "Please enter a valid email address.",
+      });
+      return false;
+    }
+
+    // Phone number validation
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Phone Number",
+        text: "Phone number must be 10 digits.",
+      });
+      return false;
+    }
+
+    // Password length
+    if (password.length < 6) {
+      Swal.fire({
+        icon: "error",
+        title: "Weak Password",
+        text: "Password must be at least 6 characters long.",
+      });
+      return false;
+    }
+
+    // Confirm password match
+    if (password !== conformPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Password Mismatch",
+        text: "Passwords do not match.",
+      });
+      return false;
+    }
+
+    // Security question validation
+    if (securityQuestion === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "Select a Security Question",
+        text: "Please select a security question.",
+      });
+      return false;
+    }
+
+    return true; // All validations passed
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return; // Stop if validation fails
+
+    try {
+      const response = await fetch("http://localhost:3000/api/esignup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          password,
+          email,
+          phone,
+          firstname,
+          lastname,
+          idnumber,
+          address,
+          conformPassword,
+          securityQuestion,
+          answer,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Mechanic profile created successfully!",
+          confirmButtonText: "OK",
+        });
+        navigate("/");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: `Error: ${data.error}`,
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Network Error",
+        text: "Unable to connect to the server. Please try again later.",
       });
     }
   };
@@ -73,7 +161,7 @@ export default function Esignup() {
       <div>
         <form className="Esignup-form" onSubmit={handleSubmit}>
           <h1>
-            Mechanic <span> Sign Up </span>{" "}
+            Mechanic <span> Sign Up </span>
           </h1>
           <div className="main-e">
             <div className="column-1">
@@ -84,6 +172,7 @@ export default function Esignup() {
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
               />
+
               <label htmlFor="Lname">Last name</label>
               <input
                 type="text"
@@ -91,6 +180,7 @@ export default function Esignup() {
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
               />
+
               <label htmlFor="Idnumber">ID Number</label>
               <input
                 type="text"
@@ -98,6 +188,7 @@ export default function Esignup() {
                 value={idnumber}
                 onChange={(e) => setIdnumber(e.target.value)}
               />
+
               <label htmlFor="text">Phone number</label>
               <input
                 type="text"
@@ -105,6 +196,7 @@ export default function Esignup() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
+
               <label htmlFor="Address">Address</label>
               <input
                 type="text"
@@ -112,6 +204,7 @@ export default function Esignup() {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
+
               <label htmlFor="email">Email</label>
               <input
                 type="text"
@@ -129,6 +222,7 @@ export default function Esignup() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
+
               <label htmlFor="password">Password</label>
               <input
                 type="password"
@@ -136,13 +230,15 @@ export default function Esignup() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <label htmlFor="password">Conform Password</label>
+
+              <label htmlFor="password">Confirm Password</label>
               <input
                 type="password"
-                placeholder="Enter your Password"
+                placeholder="Re-enter your Password"
                 value={conformPassword}
                 onChange={(e) => setConformPassword(e.target.value)}
               />
+
               <label htmlFor="securityQuestion">
                 Select a Security Question:
               </label>
@@ -171,10 +267,11 @@ export default function Esignup() {
               />
             </div>
           </div>
-          <div className="flex justify-between flex-col w-[100%] px-6"></div>
+
           <button type="submit">
             <b>SIGN UP</b>
           </button>
+
           <p>
             Already have an Account? <Link to={"/login"}>Login</Link>
           </p>
@@ -182,7 +279,7 @@ export default function Esignup() {
       </div>
 
       <div className="logo">
-        <img src={logo4} style={{ width: "350px", height: "Auto" }} />
+        <img src={logo4} style={{ width: "350px", height: "auto" }} />
       </div>
     </div>
   );

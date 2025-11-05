@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext(null);
@@ -15,13 +15,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("userRole");
-    // localStorage.removeItem("userId");
-    // localStorage.removeItem("userEmail");
-    // localStorage.clear();
-    // setUser(null);
-    navigate("/"); // Navigate to home page after logout
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userEmail");
+    setUser(null);
+    navigate("/", { replace: true });
   };
   const fetchUser = async () => {
     const token = localStorage.getItem("token");

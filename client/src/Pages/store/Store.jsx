@@ -15,7 +15,7 @@ const Store = () => {
       try {
         const response = await axios.get("http://localhost:3000/api/inventory");
         const fetchedParts = response.data.map((part) => ({
-          _id: part._id, // Ensure _id is included
+          _id: part._id,
           itemCode: part.partCode,
           itemName: part.partName,
           itemPrice: part.price,

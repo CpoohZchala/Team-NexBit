@@ -26,12 +26,15 @@ function MechanicProfile() {
     return `https://api.dicebear.com/7.x/${randomStyle}/svg?seed=${seed}`;
   };
 
-  // Add this function for fixed random rating
+  // fixed random rating
+
   const getFixedRandomRating = (mechanicId) => {
     const seed = mechanicId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return ((seed % 50) / 10); 
   };
 
+  // fixed random experience
+  
   const getFixedRandomExperience = (mechanicId) => {
     const seed = mechanicId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return (seed % 10) + 1;

@@ -22,7 +22,7 @@ function InventorySection() {
           itemPrice: part.price,
           itemQuantity: part.quantity,
           description: part.description,
-          itemImage: `http://localhost:3000${part.partImage}`, // Ensure the URL is correct
+          itemImage: part.partImageUrl ? part.partImageUrl : (part.partImage ? `http://localhost:3000${part.partImage}` : ''),
         }));
 
         // Use a Map to ensure unique items based on itemCode

@@ -11,7 +11,9 @@ const inventorySchema = new mongoose.Schema({
     unique: true,
   },
   partImage: {
-    type: String,
+    // store image binary data 
+    data: Buffer,
+    contentType: String,
   },
   quantity: {
     type: Number,

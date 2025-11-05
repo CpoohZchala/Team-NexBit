@@ -11,8 +11,9 @@ exports.createInventoryItem = async (req, res) => {
       return res.status(400).json({ status: "FAILED", message: err.message });
     }
 
-    const  { partName, partCode, quantity, price, description } = req.body;
-    const partImage = req.file ? `/uploads/inventory/${req.file.filename}` : null;
+  const  { partName, partCode, quantity, price, description } = req.body;
+  // When using memoryStorage, req.file.buffer contains the file bytes
+  const partImage = req.file ? { data: req.file.buffer, contentType: req.file.mimetype } : null;
 
     // Validate required fields
     if (!partName || !partCode || !quantity || !price) {
@@ -30,10 +31,18 @@ exports.createInventoryItem = async (req, res) => {
       });
 
       const savedItem = await newInventoryItem.save();
+
+      // Return saved item but convert image buffer to a data URL for convenience
+      const result = savedItem.toObject();
+      if (result.partImage && result.partImage.data) {
+        result.partImageUrl = `data:${result.partImage.contentType};base64,${result.partImage.data.toString('base64')}`;
+        delete result.partImage.data;
+      }
+
       res.status(201).json({
         status: "SUCCESS",
         message: "Inventory item created successfully",
-        data: savedItem,
+        data: result,
       });
     } catch (error) {
       console.error("Error creating inventory item:", error);
@@ -47,13 +56,22 @@ exports.createInventoryItem = async (req, res) => {
 
 // Fetch all inventory parts
 exports.getAllInventoryParts = async (req, res) => {
-  try {
-    const parts = await Inventory.find();
-    res.status(200).json(parts);
-  } catch (error) {
-    console.error("Error fetching inventory parts:", error);
-    res.status(500).json({ status: "FAILED", message: "An error occurred while fetching inventory parts" });
-  }
+    try {
+      const parts = await Inventory.find();
+      // convert image buffers to data URLs to include in JSON
+      const mapped = parts.map((p) => {
+        const obj = p.toObject();
+        if (obj.partImage && obj.partImage.data) {
+          obj.partImageUrl = `data:${obj.partImage.contentType};base64,${obj.partImage.data.toString('base64')}`;
+          delete obj.partImage.data;
+        }
+        return obj;
+      });
+      res.status(200).json(mapped);
+    } catch (error) {
+      console.error("Error fetching inventory parts:", error);
+      res.status(500).json({ status: "FAILED", message: "An error occurred while fetching inventory parts" });
+    }
 };
 
 // Delete an inventory item

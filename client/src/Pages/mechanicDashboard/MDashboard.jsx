@@ -160,7 +160,7 @@ const Dashboard = () => {
         localStorage.removeItem("userId");
         localStorage.removeItem("userRole");
         localStorage.removeItem("userEmail");
-        navigate("/login");
+        navigate("/login", { replace: true });
       }
     });
   };

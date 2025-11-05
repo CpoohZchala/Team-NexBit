@@ -1,8 +1,8 @@
-import "./ADashboard.css"; // Add your own styling
-import { useState, useEffect } from 'react';
-import logo from "../../assets/photos/logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import logo from "../../assets/photos/logo.png";
+import "./ADashboard.css";
 
 const ASideBar = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -13,6 +13,17 @@ const ASideBar = () => {
     // Apply theme to body
     document.body.classList.toggle('dark-theme');
   };
+
+  // Helper to provide classes to NavLink.
+  const navLinkClass = ({ isActive }) =>
+    `flex items-center justify-center w-[100%] p-3 m-2
+      bg-gradient-to-r from-slate-50 to-blue-500
+      text-[#204a64] font-medium
+      rounded-lg shadow-sm
+      border border-slate-200
+      transition-all duration-300
+      hover:shadow-md hover:scale-[1.02]
+      ${isActive ? 'text-white font-bold' : 'hover:bg-gradient-to-r hover:from-emerald-500 hover:to-green-600 hover:text-white'}`;
 
   const handleLogout = () => {
     Swal.fire({
@@ -53,43 +64,18 @@ const ASideBar = () => {
           <img src={logo} alt="logo" className="w-[200px] h-[200px]" />
         </div>
         <div className="flex flex-col justify-center items-center mt-[200px] uppercase text-[16px] font-bold">
-          <Link
-            to="/admin/dashboard"
-            className="bg-white text-[#204a64] text-center w-[100%] p-[10px] rounded-lg m-2 border border-black hover:bg-green-500 hover:text-white"
-          >
+          <NavLink to="/admin/dashboard" className={navLinkClass}>
             Dashboard
-          </Link>
-          <Link
-            to="/admin/managebooking"
-            className="flex items-center justify-center w-[100%] p-3 m-2
-              bg-gradient-to-r from-slate-50 to-white
-              text-[#204a64] font-medium
-              rounded-lg shadow-sm
-              border border-slate-200
-              transition-all duration-300
-              hover:shadow-md hover:scale-[1.02]
-              hover:bg-gradient-to-r hover:from-emerald-500 hover:to-green-600
-              hover:text-white"
-          >
+          </NavLink>
+          <NavLink to="/admin/managebooking" className={navLinkClass}>
             Manage Booking
-          </Link>
-          <Link
-            to="/admin/inventory"
-            className="flex items-center justify-center w-[100%] p-3 m-2
-              bg-gradient-to-r from-slate-50 to-white
-              text-[#204a64] font-medium
-              rounded-lg shadow-sm
-              border border-slate-200
-              transition-all duration-300
-              hover:shadow-md hover:scale-[1.02]
-              hover:bg-gradient-to-r hover:from-emerald-500 hover:to-green-600
-              hover:text-white"
-          >
+          </NavLink>
+          <NavLink to="/admin/inventory" className={navLinkClass}>
             Store
-          </Link>
-          <button 
+          </NavLink>
+          {/* <button
             className="flex items-center justify-center w-[100%] p-3 m-2
-              bg-gradient-to-r from-slate-50 to-white
+              bg-gradient-to-r from-slate-50 to-blue-500
               text-[#204a64] font-medium uppercase
               rounded-lg shadow-sm
               border border-slate-200
@@ -99,11 +85,11 @@ const ASideBar = () => {
               hover:text-white"
           >
             Setting
-          </button>
-          <Link
+          </button> */}
+          <button
             onClick={handleLogout}
             className="flex items-center justify-center w-[100%] p-3 m-2
-              bg-gradient-to-r from-slate-50 to-white
+              bg-gradient-to-r from-slate-50 to-blue-500
               text-[#204a64] font-medium
               rounded-lg shadow-sm
               border border-slate-200
@@ -113,7 +99,7 @@ const ASideBar = () => {
               hover:text-white"
           >
             Log Out
-          </Link>
+          </button>
         </div>
         <div 
   onClick={toggleTheme}

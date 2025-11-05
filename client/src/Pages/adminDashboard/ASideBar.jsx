@@ -30,7 +30,18 @@ const ASideBar = () => {
         localStorage.removeItem("userId");
         localStorage.removeItem("userRole");
         localStorage.removeItem("userEmail");
-        navigate("/login");
+        // Clear any other user-related data
+        navigate("/login", { replace: true });
+
+        // Prevent back navigation after logout
+        try {
+          window.history.pushState(null, '', window.location.href);
+          window.addEventListener('popstate', function () {
+            window.history.pushState(null, '', window.location.href);
+          });
+        } catch (e) {
+          console.error("Error setting up popstate handler:", e);
+        }
       }
     });
   };

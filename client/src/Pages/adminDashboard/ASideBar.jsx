@@ -73,7 +73,7 @@ const ASideBar = () => {
           <NavLink to="/admin/inventory" className={navLinkClass}>
             Store
           </NavLink>
-          <button
+          {/* <button
             className="flex items-center justify-center w-[100%] p-3 m-2
               bg-gradient-to-r from-slate-50 to-blue-500
               text-[#204a64] font-medium uppercase
@@ -85,7 +85,7 @@ const ASideBar = () => {
               hover:text-white"
           >
             Setting
-          </button>
+          </button> */}
           <button
             onClick={handleLogout}
             className="flex items-center justify-center w-[100%] p-3 m-2

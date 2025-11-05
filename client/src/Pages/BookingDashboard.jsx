@@ -72,6 +72,9 @@ const BookingDashboard = () => {
     }
   });
 };
+const handleBookservice = () => {
+    navigate('/bdetails')
+  };
 
  return (
     <>
@@ -88,6 +91,11 @@ const BookingDashboard = () => {
 
       <div className="m-6 mt-14 text-[48px] font-extrabold flex items-center justify-between uppercase text-[#204a64]">
         <div>Bookings</div>
+         <button
+            onClick={handleBookservice}
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold shadow">
+            Book Now
+          </button>
       </div>
 
       {/* Desktop View */}

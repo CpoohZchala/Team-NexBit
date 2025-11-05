@@ -231,8 +231,8 @@ function Widget({ type }) {
       </div>
       <div className="flex flex-col justify-between">
         <div className="flex items-center text-[16px] positive">
-          <MdKeyboardArrowUp />
-          {percentage}%
+          {/* <MdKeyboardArrowUp />
+          {percentage}% */}
         </div>
         {data.icon}
       </div>

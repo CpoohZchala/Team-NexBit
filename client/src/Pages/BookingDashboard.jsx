@@ -4,8 +4,6 @@ import { MdOutlineCancel } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
 import { FaRegEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
-// import { MdDashboard } from "react-icons/md";
-// import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import UserModal from "../components/UserModal";
 
@@ -28,7 +26,7 @@ const BookingDashboard = () => {
       );
       const data = response.data;
       if (response.status === 200) {
-        console.log({ ss: data.data });
+        console.log("Bookings:", data.data);
         setAllBookings(data.data);
       } else {
         Swal.fire({
@@ -39,7 +37,7 @@ const BookingDashboard = () => {
         });
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching bookings:", error);
     }
   };
 
@@ -57,14 +55,13 @@ const BookingDashboard = () => {
           showModal={showBookingModal}
         />
       )}
-      <div className="">
+
+      <div>
         <Navbar />
       </div>
+
       <div className="m-6 mt-14 text-[48px] font-extrabold flex items-center justify-between uppercase text-[#204a64]">
         <div>Bookings</div>
-        {/* <Link to="/admin/dashboard" className="cursor:pointer">
-          <MdDashboard />
-        </Link> */}
       </div>
 
       {/* Desktop View */}
@@ -73,38 +70,30 @@ const BookingDashboard = () => {
           <table className="min-w-full bg-white border border-gray-200 rounded-lg">
             <thead className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
               <tr>
-                <th className="px-6 py-3 text-left  border-b-2">
-                  User Name
-                </th>
-                <th className="px-6 py-3 text-left  border-b-5">
-                  Mechanic Name
-                </th>
-                <th className="px-6 py-3 text-left  border-b">
-                  Date & Time
-                </th>
-                <th className="px-6 py-3 text-left  border-b">
-                  Accept Status
-                </th>
-                <th className="px-6 py-3 text-left  border-b">
-                  Paid Status
-                </th>
-                <th className="px-6 py-3 text-left  border-b">
-                  See More
-                </th>
+                <th className="px-6 py-3 text-left border-b-2">User Name</th>
+                <th className="px-6 py-3 text-left border-b-2">Mechanic Name</th>
+                <th className="px-6 py-3 text-left border-b-2">Date & Time</th>
+                <th className="px-6 py-3 text-left border-b-2">Accept Status</th>
+                <th className="px-6 py-3 text-left border-b-2">Paid Status</th>
+                <th className="px-6 py-3 text-left border-b-2">See More</th>
               </tr>
             </thead>
+
             <tbody>
               {allBookings.map((booking, index) => (
                 <tr key={index} className="hover:bg-gray-50">
                   <td className="px-6 py-4 border-b">
-                    {booking.userId.fullname}
+                    {booking.userId?.fullname || "Unknown User"}
                   </td>
                   <td className="px-6 py-4 border-b">
-                    {booking.mechanicId.firstname}
+                    {booking.mechanicId?.firstname || "Not Assigned"}
                   </td>
                   <td className="px-6 py-4 border-b">
-                    {booking.preferreddate} - {booking.preferredtime}
+                    {booking.preferreddate || "N/A"} -{" "}
+                    {booking.preferredtime || "N/A"}
                   </td>
+
+                  {/* Accept Status */}
                   <td className="px-6 py-4 border-b">
                     {booking.isAccepted === "pending" && (
                       <button className="px-4 py-2 text-sm text-white bg-orange-500 rounded-lg">
@@ -127,6 +116,8 @@ const BookingDashboard = () => {
                       </button>
                     )}
                   </td>
+
+                  {/* Payment Status */}
                   <td className="px-6 py-4 border-b">
                     {booking.isPaid ? (
                       <button className="px-4 py-2 text-sm text-white bg-green-500 rounded-lg">
@@ -138,6 +129,8 @@ const BookingDashboard = () => {
                       </button>
                     )}
                   </td>
+
+                  {/* Edit Button */}
                   <td className="px-6 py-4 border-b">
                     <button
                       className="px-4 py-2 text-sm text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg"
@@ -156,11 +149,13 @@ const BookingDashboard = () => {
       {/* Mobile View - Receipt Style */}
       <div className="md:hidden px-4">
         {allBookings.map((booking, index) => (
-          <div key={index} className="bg-white mb-4 border-b border-gray-200">
+          <div key={index} className="bg-white mb-4 border-b border-gray-200 rounded-lg shadow-sm">
             {/* Header Section */}
             <div className="p-4 border-b">
               <div className="flex justify-between items-center">
-                <h3 className="text-lg font-bold">{booking.userId.fullname}</h3>
+                <h3 className="text-lg font-bold">
+                  {booking.userId?.fullname || "Unknown User"}
+                </h3>
                 <button
                   onClick={() => handleEdit(booking)}
                   className="px-3 py-1 text-white bg-indigo-600 rounded"
@@ -175,18 +170,18 @@ const BookingDashboard = () => {
               <div className="grid grid-cols-2 text-sm">
                 <span className="text-gray-600">Mechanic Name:</span>
                 <span className="text-right">
-                  {booking.mechanicId.firstname}
+                  {booking.mechanicId?.firstname || "Not Assigned"}
                 </span>
               </div>
 
               <div className="grid grid-cols-2 text-sm">
                 <span className="text-gray-600">Date:</span>
-                <span className="text-right">{booking.preferreddate}</span>
+                <span className="text-right">{booking.preferreddate || "N/A"}</span>
               </div>
 
               <div className="grid grid-cols-2 text-sm">
                 <span className="text-gray-600">Time:</span>
-                <span className="text-right">{booking.preferredtime}</span>
+                <span className="text-right">{booking.preferredtime || "N/A"}</span>
               </div>
 
               <div className="grid grid-cols-2 text-sm items-center">
